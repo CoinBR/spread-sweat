@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown App</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    body {
+      background-color: #333;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+
+    .countdown-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #555;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #444;
+      justify-content: flex-end;
+    }
+
+    .countdown-tag {
+      cursor: pointer;
+      margin-left: 10px;
+      width: 20rem;
+    }
+
+    .countdown-value {
+      margin: 0 20px;
+      font-size: 1.5em;
+    }
+
+    .total-row {
+      background-color: #666;
+      font-weight: bold;
+    }
+
+    input {
+      background-color: #555;
+      color: #f5f5f5;
+      border: none;
+      font-size: 1.5em;
+      text-align: center;
+      width: 3em;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    button {
+      margin: 3px;
+      background-color: #555;
+      color: #f5f5f5;
+      border: 1px solid #666;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
+
+    button:active {
+      background-color: #777;
+    }
+
+    .faded-value {
+      color: #666;
+      /* Adjust this to your desired shade of gray */
+    }
+
+    #app {
+      max-width: 53rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Day -->
+    <div>
+      <button @click="changeDay(-1)">-</button>
+      <span>Day: {{ day }}</span>
+      <button @click="changeDay(1)">+</button>
+    </div>
+
+    <!-- Countdown -->
+    <div v-for="(countdown, index) in countdowns" :key="index" class="countdown-container">
+      <template v-for="num in 10">
+        <button @click="subtract(countdown, 11 - num)">{{ '-' + (11 - num) }}</button>
+      </template>
+      <input v-model.number="countdown.value" :class="{ 'faded-value': countdown.value <= 0 }">
+      <button @click="add(countdown)">+1</button>
+      <span class="countdown-tag" @click="reset(countdown)">{{ countdown.tag }}</span>
+    </div>
+
+
+    <!-- Countdown -->
+    <div class="countdown-container total-row">
+      <span class="countdown-value">{{ totalValue }}</span>
+      <span class="countdown-tag">Total</span>
+    </div>
+  </div>
+
+  <script>
+    const { ref, computed, watch } = Vue;
+
+    const App = {
+      setup() {
+
+        const day = ref(3);
+
+        function circularIndex(arrFun, indexFun) {
+
+          const arr = arrFun()
+          const index = indexFun()
+
+          if (arr.length === 0)
+            throw "empty array"
+
+          let circularIndex = (index - 1) % arr.length;
+
+          if (circularIndex < 0)
+            circularIndex += arr.length;
+
+          return arr[circularIndex];
+        }
+
+        const extraExerciseForDay = circularIndex
+
+
+        const a = () => [
+          { initial: 10, tag: 'Supino Reto' },
+          { initial: 20, tag: 'Supino Inclinado' },
+          { initial: 10, tag: 'Crucifixo Inclinado' },
+
+          { initial: 20, tag: 'Desenvolvimento' },
+          { initial: 10, tag: 'Elevação Frontal' },
+          { initial: 10, tag: 'Elevação Lateral' },
+
+          { initial: 20, tag: 'Testa' },
+          { initial: 20, tag: 'Paralelas' },
+        ]
+
+        const b = () => [
+          { initial: 10, tag: 'Levantamento Terra' },
+
+          { initial: 10, tag: 'Remada Curvada Cima' },
+          { initial: 10, tag: 'Remada Curvada Meio' },
+          { initial: 10, tag: 'Remada Curvada Baixo' },
+
+          { initial: 10, tag: 'Remada Alta' },
+          { initial: 20, tag: 'Encolhimento Ombros' },
+
+          { initial: 20, tag: 'Rosca Direta' },
+          { initial: 20, tag: 'Rosca Martelo' },
+
+          { initial: 10, tag: 'Manguito' },
+        ]
+
+
+        const leg = () => [
+          { initial: 15, tag: 'Sumô' },
+          { initial: 15, tag: 'Afundo' },
+          { initial: 15, tag: 'Elevacao Pelvica' },
+          { initial: 15, tag: 'Agachamento' },
+          { initial: 15, tag: 'Stiff' },
+        ]
+
+        const calf = () => [
+          { initial: 15, tag: 'Panturrilha Sentado' },
+          { initial: 15, tag: 'Panturrilha em Pé' },
+        ]
+
+        // todo panturrilha
+
+        const abs = () => [
+          { initial: 15, tag: 'Abs Supra' },
+        ]
+
+        const pulso = () => [
+          { initial: 10, tag: 'Pulso Cima' },
+          { initial: 10, tag: 'Pulso Baixo' },
+        ]
+
+
+        const baseForDay = () => day.value % 2 == 0 ? b() : a()
+
+        const extraForDay = () => [leg, calf, abs, pulso]
+          .map(group => extraExerciseForDay(group, () => day.value))
+
+
+        selected = () => []
+          .concat(baseForDay())
+          .concat(extraForDay())
+
+
+        countdowns = ref(
+          selected()
+            .map(countdown => { return { value: countdown.initial, ...countdown } })
+        );
+
+        const subtract = (countdown, amount) => {
+          countdown.value -= amount;
+        };
+
+        const add = (countdown) => {
+          if (countdown.value < countdown.initial) {
+            countdown.value++;
+          }
+        };
+
+        const reset = (countdown) => {
+          const newValue = countdown.value == 0
+            ? countdown.initial
+            : 0
+
+          countdown.value = newValue
+        };
+
+        const totalValue = computed(() => {
+          return countdowns.value.reduce((sum, countdown) => sum + countdown.value, 0);
+        });
+
+        watch(day, () => {
+          reinitializeCountdowns();
+          saveState();
+        });
+
+        watch(countdowns, () => {
+          saveState();
+        }, { deep: true });
+
+        const fetchData = async () => {
+          const response = await fetch('/getState');
+          const data = await response.json();
+
+          day.value = data.day;
+          countdowns.value = data.countdowns;
+        };
+
+        const saveState = async () => {
+          await fetch('/saveState', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              day: day.value,
+              countdowns: countdowns.value
+            })
+          });
+        };
+
+        const changeDay = (delta) => {
+          day.value += delta;
+        };
+
+        const reinitializeCountdowns = () => {
+          countdowns.value = selected().map(countdown => {
+            return { value: countdown.initial, ...countdown }
+          });
+        };
+
+        fetchData();  // Load state when the app initializes.
+
+        return { day, countdowns, subtract, add, reset, totalValue, changeDay };
+      }
+    };
+
+    Vue.createApp(App).mount("#app");
+  </script>
+</body>
+
+</html>

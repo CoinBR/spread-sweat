@@ -1,0 +1,12 @@
+{
+  "name": "countdown-app",
+  "version": "1.0.0",
+  "description": "A countdown application with a simple backend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
