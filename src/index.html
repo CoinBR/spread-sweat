@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE tml>
 <html lang="en">
 
 <head>
@@ -115,6 +115,7 @@
       setup() {
 
         const day = ref(3);
+        const loading = ref(true);
 
         function circularIndex(arrFun, indexFun) {
 
@@ -224,25 +225,24 @@
           countdown.value = newValue
         };
 
+
         const totalValue = computed(() => {
           return countdowns.value.reduce((sum, countdown) => sum + countdown.value, 0);
         });
 
-        watch(day, () => {
-          reinitializeCountdowns();
-          saveState();
-        });
-
         watch(countdowns, () => {
-          saveState();
+          if (!loading.value)
+            saveState();
         }, { deep: true });
 
         const fetchData = async () => {
           const response = await fetch('/getState');
           const data = await response.json();
 
-          day.value = data.day;
           countdowns.value = data.countdowns;
+          day.value = data.day;
+
+          loading.value = false
         };
 
         const saveState = async () => {
@@ -258,14 +258,27 @@
           });
         };
 
-        const changeDay = (delta) => {
+        const changeDay = async (delta) => {
+          if (loading.value)
+            return
+
+          loading.value = true
+
           day.value += delta;
+          reinitializeCountdowns();
+          await saveState();
+
+          loading.value = false
         };
 
         const reinitializeCountdowns = () => {
+          loading.value = true
+
           countdowns.value = selected().map(countdown => {
             return { value: countdown.initial, ...countdown }
           });
+
+          loading.value = false
         };
 
         fetchData();  // Load state when the app initializes.
