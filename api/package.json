@@ -4,9 +4,12 @@
   "description": "A countdown application with a simple backend.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "up": "node src/api.js",
+    "dev": "npm run up"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2"
   }
 }
