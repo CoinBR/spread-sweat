@@ -1,0 +1,18 @@
+{
+    "sourceFile": "sv/package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1699016033717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1699016033717,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"countdown-app\",\n  \"version\": \"1.0.0\",\n  \"description\": \"A countdown application with a simple backend.\",\n  \"main\": \"server.js\",\n  \"scripts\": {\n    \"start\": \"node src/sv.js\"\n  },\n  \"dependencies\": {\n    \"express\": \"^4.18.2\"\n  }\n}\n"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "ui.bkp/DayIndexer.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1698874506585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1698874506585,
+            "name": "Commit-0",
+            "content": "<template>\n  <div>\n    <ul>\n      <li v-for=\"date in dateList\" :key=\"date.dateString\">\n        {{ date.dateString }} - Day {{ date.dayNumber }}\n      </li>\n    </ul>\n  </div>\n</template>\n\n<script>\nexport default {\n  props: {\n    startDate: {\n      type: String,\n      required: true\n    },\n    includedPastDays: {\n      type: Number,\n      default: 0\n    },\n    includeFutureDays: {\n      type: Number,\n      default: 0\n    }\n  },\n  data() {\n    return {\n      dateList: [],\n    };\n  },\n  created() {\n    this.populateDateList();\n  },\n  methods: {\n    populateDateList() {\n      const startDate = new Date(this.startDate);\n      const currentDate = new Date(); // Today's date\n\n      // Calculate the day number excluding weekends\n      let dayNumber = this.calculateDayNumber(startDate, currentDate);\n\n      // Populate the date list for 3 days before and 5 days after today, skipping weekends\n      for (let i = -includedPastDays; i <= includeFutureDays; i++) {\n        let tempDate = new Date(currentDate);\n        tempDate.setDate(tempDate.getDate() + i);\n        if (tempDate.getDay() !== 0 && tempDate.getDay() !== 6) { // Skip weekends\n          this.dateList.push({\n            dateString: this.formatDate(tempDate),\n            dayNumber: dayNumber\n          });\n          dayNumber += (i !== -3) ? 1 : 0; // Increment dayNumber except for the first iteration\n        }\n      }\n    },\n    calculateDayNumber(startDate, endDate) {\n      let count = 0;\n      let currentDate = new Date(startDate);\n      while (currentDate <= endDate) {\n        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) { // Weekday\n          count++;\n        }\n        currentDate.setDate(currentDate.getDate() + 1);\n      }\n      return count;\n    },\n    formatDate(date) {\n      return date.toISOString().split('T')[0];\n    },\n  },\n};\n</script>\n\n<style>\n</style>\n"
+        }
+    ]
+}

@@ -1,11 +1,28 @@
 version: '3'
 
 services:
-  app:
-    build: .
+  
+  spread_sweat_api:
+    build: 
+      context: .
+      dockerfile: Dockerfile.api
+    env_file:
+      - ".env"
     ports:
-      - "3000:3000"
+      - "${VITE_API_PORT}:${VITE_API_PORT}"
     volumes:
-      - ./src:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./api:/app
+      - /app/node_modules 
 
+  spread_sweat_ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    env_file:
+      - ".env"
+    ports:
+      - "${VITE_UI_PORT}:${VITE_UI_PORT}"
+    volumes:
+      - ./ui:/app
+      - /app/node_modules
+        

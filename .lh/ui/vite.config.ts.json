@@ -1,0 +1,34 @@
+{
+    "sourceFile": "ui/vite.config.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1698876824445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1698876934726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,10 @@\n import { defineConfig } from 'vite'\n import vue from '@vitejs/plugin-vue'\n \n+const env = process.env\n+\n+\n // https://vitejs.dev/config/\n export default defineConfig({\n   plugins: [vue()],\n   server: {\n"
+                },
+                {
+                    "date": 1698876965575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,8 @@\n // https://vitejs.dev/config/\n export default defineConfig({\n   plugins: [vue()],\n   server: {\n-    host: \n+    host: env.VITE_UI_HOST,\n+    port: env.VITE_UI_PORT,\n   }\n })\n"
+                },
+                {
+                    "date": 1699018056476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import { defineConfig } from 'vite'\n import vue from '@vitejs/plugin-vue'\n \n-const env = process.env\n+const env = import.meta.env;\n \n // https://vitejs.dev/config/\n export default defineConfig({\n   plugins: [vue()],\n"
+                },
+                {
+                    "date": 1699018082512,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import { defineConfig } from 'vite'\n import vue from '@vitejs/plugin-vue'\n \n-const env = import.meta.env;\n+const env = process.env\n \n // https://vitejs.dev/config/\n export default defineConfig({\n   plugins: [vue()],\n"
+                }
+            ],
+            "date": 1698876824445,
+            "name": "Commit-0",
+            "content": "import { defineConfig } from 'vite'\nimport vue from '@vitejs/plugin-vue'\n\n// https://vitejs.dev/config/\nexport default defineConfig({\n  plugins: [vue()],\n  server: {\n    host: \n  }\n})\n"
+        }
+    ]
+}

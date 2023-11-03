@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/ui/src/App.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1698869725744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1698869730989,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,12 +14,10 @@\n   <HelloWorld msg=\"Vite + Vue\" />\n </template>\n \n <style scoped>\n-    body {\n-      background-color: #333;\n-      color: #f5f5f5;\n-      font-family: Arial, sans-serif;\n-    }\n-\n-\n+body {\n+  background-color: #333;\n+  color: #f5f5f5;\n+  font-family: Arial, sans-serif;\n+}\n </style>\n"
+                },
+                {
+                    "date": 1698869751575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,9 @@\n </script>\n \n <template>\n   <div>\n-    <a href=\"https://vitejs.dev\" target=\"_blank\">\n-      <img src=\"/vite.svg\" class=\"logo\" alt=\"Vite logo\" />\n-    </a>\n-    <a href=\"https://vuejs.org/\" target=\"_blank\">\n-      <img src=\"./assets/vue.svg\" class=\"logo vue\" alt=\"Vue logo\" />\n-    </a>\n   </div>\n-  <HelloWorld msg=\"Vite + Vue\" />\n </template>\n \n <style scoped>\n body {\n"
+                },
+                {
+                    "date": 1698869773829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <script setup lang=\"ts\">\n-import HelloWorld from './components/HelloWorld.vue'\n+import Countdowns from './components/HelloWorld.vue'\n </script>\n \n <template></template>\n \n"
+                },
+                {
+                    "date": 1698869794782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,11 @@\n <script setup lang=\"ts\">\n import Countdowns from './components/Countdowns.vue'\n </script>\n \n-<template></template>\n+<template>\n+  <Countdowns/>\n+</template>\n \n <style scoped>\n body {\n   background-color: #333;\n"
+                }
+            ],
+            "date": 1698869725744,
+            "name": "Commit-0",
+            "content": "<script setup lang=\"ts\">\nimport HelloWorld from './components/HelloWorld.vue'\n</script>\n\n<template>\n  <div>\n    <a href=\"https://vitejs.dev\" target=\"_blank\">\n      <img src=\"/vite.svg\" class=\"logo\" alt=\"Vite logo\" />\n    </a>\n    <a href=\"https://vuejs.org/\" target=\"_blank\">\n      <img src=\"./assets/vue.svg\" class=\"logo vue\" alt=\"Vue logo\" />\n    </a>\n  </div>\n  <HelloWorld msg=\"Vite + Vue\" />\n</template>\n\n<style scoped>\n    body {\n      background-color: #333;\n      color: #f5f5f5;\n      font-family: Arial, sans-serif;\n    }\n\n\n</style>\n"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "sourceFile": "sv/src/sv.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1699022462542,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1699022506983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n   state = JSON.parse(rawData);\n }\n \n app.get('/loadState', (req, res) => {\n+  console.log({req, res})\n   res.send(state);\n });\n \n app.post('/saveState', (req, res) => {\n"
+                },
+                {
+                    "date": 1699022567199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n   state = JSON.parse(rawData);\n }\n \n app.get('/loadState', (req, res) => {\n-  console.log({ req, res })\n+  console.log({ req.body })\n   res.send(state);\n });\n \n app.post('/saveState', (req, res) => {\n"
+                },
+                {
+                    "date": 1699022593374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n   state = JSON.parse(rawData);\n }\n \n app.get('/loadState', (req, res) => {\n-  console.log({ req.body })\n+  console.log( req.body )\n   res.send(state);\n });\n \n app.post('/saveState', (req, res) => {\n"
+                }
+            ],
+            "date": 1699022462542,
+            "name": "Commit-0",
+            "content": "require('dotenv').config();\nconst env = process.env;\n\nconst express = require('express');\nconst bodyParser = require('body-parser');\nconst path = require('path');\nconst fs = require('fs');\n\nconst app = express();\nconst PORT = env.VITE_API_PORT;\n\n\n// Middleware to parse JSON requests\napp.use(bodyParser.json());\n\n// Serve static files from the current directory\napp.use(express.static(path.join(__dirname)));\n\nlet state = {\n  day: 1,\n  countdowns: []\n};\n\nif (fs.existsSync('state.json')) {\n  const rawData = fs.readFileSync('state.json');\n  state = JSON.parse(rawData);\n}\n\napp.get('/loadState', (req, res) => {\n  res.send(state);\n});\n\napp.post('/saveState', (req, res) => {\n  state = req.body;\n  fs.writeFileSync('state.json', JSON.stringify(state));  // Save to file for persistence.\n  res.send({ status: 'OK' });\n});\n\n// Serve the HTML file for any other route\napp.get('*', (req, res) => {\n  res.sendFile(path.join(__dirname, 'index.html'));\n});\n\napp.listen(PORT, () => {\n  console.log(`Server started on port ${PORT}`);\n});\n\n"
+        }
+    ]
+}
