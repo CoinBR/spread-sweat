@@ -5,9 +5,12 @@ const API_URL = `http://${env.VITE_API_HOST}:${env.VITE_API_PORT}`
 const countdownStateEndpoint = `${API_URL}/state`;
 
 import Countdowns from './components/Countdowns.vue';
+import DayIndexer from './components/DayIndexer.vue';
+
 </script>
 
 <template>
+                          <DayIndexer start-date="2023-10-18" :past-days-to-display=2 :future-days-to-display=7 />
   <Countdowns :api-state-endpoint="countdownStateEndpoint" />
 </template>
 
