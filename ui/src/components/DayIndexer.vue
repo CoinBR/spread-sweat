@@ -19,8 +19,8 @@ function indexDates(dates: Date[], firstIndex: number = 1): IndexedDate[] {
 }
 
 function plusOneDay(date: Date): Date {
-  const tmp = new Date()
-  date.setDate(date.getDate() + 1)
+  const tmp = new Date(date)
+  tmp.setDate(date.getDate() + 1)
   return tmp
 }
 
@@ -46,7 +46,7 @@ function weekdaysBetween(from: Date, to: Date): Date[] {
 function dateRange(from: Date, to: Date): Date[] {
 
   function calc(acc: Date[], from: Date, to: Date) {
-    if (from > to)
+    if (from.getTime() >= to.getTime())
       return acc
 
     return calc(
