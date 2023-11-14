@@ -2,7 +2,7 @@ import { IndexedDate } from "./DayIndexer";
 
 export function today() {
   const today = new Date();
-  return new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate()); // local tz
 }
 
 export function indexDates(dates: Date[], firstIndex: number = 1): IndexedDate[] {
@@ -41,7 +41,7 @@ export function weekdaysBetween(from: Date, to: Date): Date[] {
 export function dateRange(from: Date, to: Date): Date[] {
 
   function calc(acc: Date[], from: Date, to: Date) {
-    if (from.getTime() >= to.getTime())
+    if (from.getTime() > to.getTime())
       return acc
 
     return calc(
@@ -60,6 +60,6 @@ export function isWeekday(date: Date): boolean {
   return ![0, 6].includes(date.getDay())
 }
 
-export function formatDate(date: Date): string {
-  return date.toISOString().split('T')[0]
-}
+// export function formatDate(date: Date): string {
+//   return date.toISOString().split('T')[0]
+// }
