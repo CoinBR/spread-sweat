@@ -60,6 +60,10 @@ export function isWeekday(date: Date): boolean {
   return ![0, 6].includes(date.getDay())
 }
 
-// export function formatDate(date: Date): string {
-//   return date.toISOString().split('T')[0]
-// }
+export function localDate(yyyyMMdd: string) {
+  // When the time zone offset is absent, date-only forms are interpreted as a UTC time and date-time forms are interpreted as local time. This is due to a historical spec error that was not consistent with ISO 8601 but could not be changed due to web compatibility.
+  // The getDay() method of Date instances returns the day of the week for this date according to local time
+  // inform time to prevent unintuitive js timezone behavior 
+  return new Date(`${yyyyMMdd}T00:00:00`)
+}
+

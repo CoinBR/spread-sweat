@@ -74,8 +74,8 @@ describe('plusOneDay()', () => {
     ["2023-02-28", "2023-03-01"],
     ["2702-12-31", "2703-01-01"],
   ])('when receiving %s returns the next day (%s)', (rawArg, rawExpected) => {
-    const arg = localDate(rawArg)
-    const expected = localDate(rawExpected)
+    const arg = f.localDate(rawArg)
+    const expected = f.localDate(rawExpected)
     expect(f.plusOneDay(arg))
       .toEqual(expected)
   })
@@ -130,8 +130,8 @@ describe('xWeekdaysFrom()', () => {
   ])('when receiving asked for %i days from %s returns the %s', (days, rawFrom, rawExpected) => {
 
     // inform time to prevent unintuitive js timezone behavior 
-    const from = localDate(rawFrom)
-    const expected = localDate(rawExpected)
+    const from = f.localDate(rawFrom)
+    const expected = f.localDate(rawExpected)
     expect(f.xWeekdaysFrom(days, from))
       .toEqual(expected)
   })
@@ -179,7 +179,7 @@ describe('isWeekday()', () => {
     ['2033-10-08', false, 'saturday'],
     ['2033-10-09', false, 'sunday'],
   ])('when receiving %s should be %s (%s)', (rawArg, expected, description) => {
-    const arg = localDate(rawArg)
+    const arg = f.localDate(rawArg)
     expect(f.isWeekday(arg))
       .toBe(expected)
   })
@@ -202,9 +202,9 @@ describe("weekdaysBetween()", () => {
     ['2022-12-31', '2023-01-08', ['2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05', '2023-01-06']],
     ['2022-12-31', '2023-01-09', ['2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05', '2023-01-06', '2023-01-09']],
   ])("given from %s to %s should return %s", (rawFrom, rawTo, rawExpected) => {
-    const from = localDate(rawFrom)
-    const to = localDate(rawTo)
-    const expected = rawExpected.map(localDate)
+    const from = f.localDate(rawFrom)
+    const to = f.localDate(rawTo)
+    const expected = rawExpected.map(f.localDate)
 
     expect(f.weekdaysBetween(from, to))
       .toEqual(expected)
@@ -227,9 +227,9 @@ describe("dateRange()", () => {
     ['2022-12-31', '2023-01-08', ['2022-12-31', '2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05', '2023-01-06', '2023-01-07', '2023-01-08']],
     ['2022-12-31', '2023-01-09', ['2022-12-31', '2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05', '2023-01-06', '2023-01-07', '2023-01-08', '2023-01-09']],
   ])("given from %s to %s should return %s", (rawFrom, rawTo, rawExpected) => {
-    const from = localDate(rawFrom)
-    const to = localDate(rawTo)
-    const expected = rawExpected.map(localDate)
+    const from = f.localDate(rawFrom)
+    const to = f.localDate(rawTo)
+    const expected = rawExpected.map(f.localDate)
 
     expect(f.dateRange(from, to))
       .toEqual(expected)
@@ -238,9 +238,3 @@ describe("dateRange()", () => {
 })
 
 
-function localDate(yyyyMMdd: string) {
-  // When the time zone offset is absent, date-only forms are interpreted as a UTC time and date-time forms are interpreted as local time. This is due to a historical spec error that was not consistent with ISO 8601 but could not be changed due to web compatibility.
-  // The getDay() method of Date instances returns the day of the week for this date according to local time
-  // inform time to prevent unintuitive js timezone behavior 
-  return new Date(`${yyyyMMdd}T00:00:00`)
-}

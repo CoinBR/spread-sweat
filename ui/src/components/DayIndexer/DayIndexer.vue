@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { computed, } from 'vue'
-import * as f from './DayIndexerFunctions.js';
+import { xWeekdaysFromToday, weekdaysBetween, indexDates, today, localDate } from './DayIndexerFunctions'
 
 export default {
 
@@ -27,26 +27,26 @@ export default {
   },
 
   setup(props) {
-    const day1 = computed(() => new Date(props.startDate))
+    const day1 = computed(() => localDate(props.startDate))
     const lastDay = computed(() => xWeekdaysFromToday(props.futureDaysToDisplay))
 
     const allDates = computed(() => weekdaysBetween(day1.value, lastDay.value))
-    console.log({ allDates: allDates.value })
     const allIndexedDates = computed(() => indexDates(allDates.value))
 
-    const todayIndex = allIndexedDates.value
-      .find(indexedDate => indexedDate.date === today())!
+    const todayIndex = computed(() => allIndexedDates.value
+      .find(indexedDate => indexedDate.date.getTime() === today().getTime())!
       .index
+    )
 
     const indexedDatesToDisplay = computed(() => allIndexedDates.value
       .filter(indexedDate =>
-        todayIndex - props.pastDaysToDisplay <= indexedDate.index
-        && indexedDate.index <= todayIndex + props.futureDaysToDisplay
+        todayIndex.value - props.pastDaysToDisplay <= indexedDate.index
+        && indexedDate.index <= todayIndex.value + props.futureDaysToDisplay
       )
     )
 
 
-    return { indexedDatesToDisplay, formatDate, props }
+    return { indexedDatesToDisplay, props }
   }
 }
 </script>
