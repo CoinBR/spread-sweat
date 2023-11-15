@@ -1,23 +1,29 @@
-import { IndexedDate } from "./DayIndexer";
+import { IndexedDate as indexedDate } from "./types";
 
 export function today() {
   const today = new Date();
   return new Date(today.getFullYear(), today.getMonth(), today.getDate()); // local tz
 }
 
-export function indexDates(dates: Date[], firstIndex: number = 1): IndexedDate[] {
+export function indexDates(dates: Date[], firstIndex: number = 1): indexedDate[] {
   return dates.map((date, i) => ({ date, index: i + firstIndex }))
 }
 
-export function plusOneDay(date: Date): Date {
+export function xDaysFrom(numberOfDays: number, date: Date): Date {
+  validateDate(date)
+
   const tmp = new Date(date)
-  tmp.setDate(date.getDate() + 1)
+  tmp.setDate(date.getDate() + numberOfDays)
   return tmp
 }
 
+
+export function plusOneDay(date: Date): Date {
+  return xDaysFrom(1, date)
+}
+
 export function xWeekdaysFrom(days: number, from: Date): Date {
-  if (isNaN(from.getTime()))
-    throw "Invalid/NaN date passed"
+  validateDate(from)
 
   if (days <= 0)
     return from;
@@ -54,10 +60,32 @@ export function dateRange(from: Date, to: Date): Date[] {
 }
 
 export function isWeekday(date: Date): boolean {
-  if (isNaN(date.getTime()))
-    throw "Invalid/NaN date passed"
-
+  validateDate(date)
   return ![0, 6].includes(date.getDay())
+}
+
+export function formatIndexedDate(IndexedDate: indexedDate): string {
+  const date = IndexedDate.date
+
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // months are 0-indexed
+  const day = date.getDate().toString().padStart(2, '0');
+
+  const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const weekday = weekdays[date.getDay()];
+
+  return `${IndexedDate.index} - ${weekday} ${day}/${month}/${year}`;
+}
+
+export function validateDate(date: Date) {
+  if (!isValidDate(date))
+    throw "Invalid/NaN date passed"
+}
+
+export function isValidDate(date: Date) {
+  return !!date
+    && date instanceof Date
+    && !(isNaN(date.getTime()))
 }
 
 export function localDate(yyyyMMdd: string) {

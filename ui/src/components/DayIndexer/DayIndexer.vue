@@ -1,12 +1,15 @@
 <template>
-  <h1>teste</h1>
-  <h1> props - {{ props }} -</h1>
-  <h1> indexedDatesToDisplay - {{ indexedDatesToDisplay }} -</h1>
+                                  <ul>
+                                    <li v-for="day in indexedDatesToDisplay" :key="day.index">
+                                      <DayCard :current=day, :last-done=""  > </DayCard>
+                                    </li>
+
+                                  </ul>
 </template>
 
 <script lang="ts">
 import { computed, } from 'vue'
-import { xWeekdaysFromToday, weekdaysBetween, indexDates, today, localDate } from './DayIndexerFunctions'
+import { formatIndexedDate, xWeekdaysFromToday, weekdaysBetween, indexDates, today, localDate } from './DayIndexerFunctions'
 
 export default {
 
@@ -23,7 +26,10 @@ export default {
       type: Number,
       required: true
     },
-
+    lastDoneDate: {
+      type: String,
+      required: true
+    }
   },
 
   setup(props) {
@@ -46,7 +52,7 @@ export default {
     )
 
 
-    return { indexedDatesToDisplay, props }
+    return { indexedDatesToDisplay, formatIndexedDate }
   }
 }
 </script>
