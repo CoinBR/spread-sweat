@@ -1,0 +1,29 @@
+#!/bin/sh
+export __root_dir="`pwd`"
+
+
+on_dir() {
+  local -r folder_name=$1; shift;
+  __current_dir=`pwd`
+  cd "$__root_dir/$folder_name"
+  "$@"
+  cd "$__current_dir"
+}
+
+on_ui() {
+  on_dir ui "$@"
+}
+
+on_api() {
+  on_dir api "$@"
+}
+
+on_both() {
+  on_api "$@" &
+  on_ui "$@" &
+}
+
+
+alias ,up=',down ; SPREAD_SWEAT_CUSTOM_BOOT_CMD="npm run dev-docker" docker-compose up'      
+alias ,down='docker-compose stop ; kill $(lsof -t -i :8010,7010) ; kill -9 $(lsof -t -i :8010,7010)'
+alias ,tst='on_ui npm run test'

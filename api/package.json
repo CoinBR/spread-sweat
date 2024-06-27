@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "up": "node src/api.js",
-    "dev": "npm run up"
+    "dev": "npm run up",
+    "dev-docker": "npm run up"
   },
   "dependencies": {
     "cors": "^2.8.5",

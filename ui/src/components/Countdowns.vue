@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
+import {ref, computed, watch, onMounted, Ref} from 'vue';
 
 
 interface Exercise {
@@ -19,11 +19,15 @@ export default {
       type: String,
       required: true
     },
+    onUpdateDay: {
+      type: Function,
+      required: true
+    }
   },
 
   setup(props) {
-
     const day = ref<number>(1);
+
     const loading = ref<boolean>(true);
 
     function circularIndex(arrFun: () => Exercise[], indexFun: () => number): Exercise {
@@ -153,6 +157,7 @@ export default {
       countdowns.value = data.countdowns;
       day.value = data.day;
 
+      props.onUpdateDay(day.value)
       loading.value = false;
     };
 
@@ -181,6 +186,7 @@ export default {
       day.value += delta;
       reinitializeCountdowns();
       await saveState();
+      props.onUpdateDay(day.value)
 
       loading.value = false;
     };
