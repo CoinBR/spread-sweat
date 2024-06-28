@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {computed,} from 'vue'
+import {computed} from 'vue'
 import {
   formatIndexedDate as formattedIndexDate,
   xWeekdaysFromToday,
@@ -45,6 +45,8 @@ export default {
 
 
   setup(props) {
+
+
     return {
       text: computed(() => formattedIndexDate(props.current)),
       cssClass: computed(() => cssClass(props))

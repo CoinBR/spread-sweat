@@ -1,4 +1,4 @@
-import { PropOptions } from 'vue';
+import { PropType } from 'vue';
 import { isValidDate } from "./DayIndexerFunctions"
 
 
@@ -7,21 +7,20 @@ export type IndexedDate = {
   index: number
 }
 
-export function IndexedDateProp(): PropOptions {
-  const validator = (obj: IndexedDate) => {
-    return {
-      obj: obj !== null && obj !== undefined && typeof obj === 'object'
+export function IndexedDateProp(): {type: PropType<IndexedDate>, required: true, validator: (obj: IndexedDate) => boolean} {
+  const validator = (obj: IndexedDate): boolean => {
+    return obj !== null && obj !== undefined && typeof obj === 'object'
         && typeof obj.index === 'number' && !isNaN(obj.index)
-        && isValidDate(obj.date)
-    }
+        && isValidDate(obj.date);
   }
 
   return {
-    type: Object,
+    type: Object as PropType<IndexedDate>,
     required: true,
     validator
   }
 }
+
 
 export type DayCardProps = {
   lastDone: IndexedDate,

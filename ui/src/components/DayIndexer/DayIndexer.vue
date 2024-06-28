@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import {computed, watch,} from 'vue'
+import {computed, ComputedRef} from 'vue'
 import DayCard from './DayCard.vue'
 import {
   formatIndexedDate,
@@ -55,8 +55,11 @@ export default {
             from.value <= indexedDate.date  && indexedDate.date <= to.value)
         )
 
-    const indexedLastDone = computed(() => allIndexedDates.value
+    const maybeIndexedLastDone = computed(() => allIndexedDates.value
         .find(idxDate => idxDate.date.getTime() == lastDone.value.getTime()))
+    if (!maybeIndexedLastDone.value)
+      throw new Error("Last done date not found in indexed dates.")
+    const indexedLastDone = maybeIndexedLastDone as ComputedRef<IndexedDate>
 
     return {indexedDatesToDisplay, indexedLastDone, DayCard}
   }
